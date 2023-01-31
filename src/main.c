@@ -3,6 +3,8 @@
 
 int main(void)
 {
-    fprintf(stdout, "Hello, there!\n");
+    String *string = String_FromCharArray("Hello, there!\n");
+    fprintf(stdout, StringFmt "\n", StringFmtArgs(string));
+    Free_String(string);
     return 0;
 }
