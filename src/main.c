@@ -3,8 +3,11 @@
 
 int main(void)
 {
-    String *string = String_FromCharArray("Hello, there!\n");
-    fprintf(stdout, StringFmt "\n", StringFmtArgs(string));
-    Free_String(string);
+    String *hello = String_FromCharArray("Hello,");
+    String *there = String_FromCharArray(" there!");
+    String_Concat(hello, 1, there);
+    fprintf(stdout, StringFmt "\n", StringFmtArgs(hello));
+    Free_String(hello);
+    Free_String(there);
     return 0;
 }

@@ -11,6 +11,7 @@ typedef struct String
 } String;
 
 String * String_FromCharArray(const char *array);
-unsigned char Free_String(String *string);
+void Free_String(String *string);
+String * String_Concat(String *self, int count, ...);
 
 #endif
