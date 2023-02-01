@@ -7,6 +7,7 @@
 #define StrFmtArgs(str) str->length, str->start
 #define StrFmtArgsA(str, ofst) str->length - ofst, str->start + ofst
 #define StrFmtArgsEx(str, ofst, len) len, str->start + ofst
+#define FOREACH_STR(c, str) for (int c = *(str->start), index_##c = 0; index_##c <= str->length; c = *(str->start + ++index_##c))
 
 typedef struct Str
 {
@@ -24,6 +25,7 @@ Str * Str_Clone(Str *self);
 #define SPAN(str, s, e) Span_FromStr(str, s, e)
 #define DEL_SPAN(span) Span_Free(span)
 #define SpanStrFmtArgs(span) span->end - span->start, span->str->start + span->start
+#define FOREACH_SPAN(c, span) for (int c = *(str->start + span->start), index_##c = span->start; index_##c <= span->end; c = *(str->start + ++index_##c))
 
 typedef struct Span
 {

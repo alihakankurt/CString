@@ -3,10 +3,18 @@
 
 int main(void)
 {
-    Str *s = STR("Hello, there!");
-    Span *sp = SPAN(s, 7, 12);
-    fprintf(stdout, StrFmt "\n", SpanStrFmtArgs(sp));
-    DEL_STR(s);
-    DEL_SPAN(sp);
+    Str *str = STR("Hello, there!");
+    Span *span = SPAN(str, 7, 12);
+    FOREACH_STR(c, str)
+    {
+        fprintf(stdout, "%c", c);
+    }
+    fprintf(stdout, "\n");
+    FOREACH_SPAN(c, span)
+    {
+        fprintf(stdout, "%c", c);
+    }
+    DEL_SPAN(span);
+    DEL_STR(str);
     return 0;
 }
