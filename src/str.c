@@ -89,3 +89,20 @@ int Str_Compare(Str *self, Str *other)
     }
     return diff ? (diff < 0 ? -1 : 1) : 0;
 }
+
+Str * Str_Clone(Str *self)
+{
+    assert(self && "Str_Clone(Str*): Could not clone `self` 'cause it was null");
+    Str *clone = malloc(sizeof(Str));
+    assert(clone && "Str_Clone(Str*): Could not allocate enough memory for `clone`");
+    clone->length = self->length;
+    size_t size = clone->length * sizeof(char);
+    clone->start = malloc(size);
+    if (!clone->start)
+    {
+        free(clone);
+        assert("Str_Clone(Str*): Could not allocate enough memory for `clone`");
+    }
+    memcpy(clone->start, self->start, size);
+    return clone;
+}
