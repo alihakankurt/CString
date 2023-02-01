@@ -12,7 +12,7 @@ Str * Str_FromConst(const char *constant)
     assert(str && "Str_FromConst(const char*): Could not allocate enough memory for str object");
     int length = strlen(constant);
     str->length = length;
-    int size = length * sizeof(char);
+    size_t size = length * sizeof(char);
     str->start = malloc(size);
     if (!str)
     {
@@ -58,4 +58,34 @@ Str * Str_Extend(Str *self, const char *constant)
     memcpy(self->start + self->length, constant, length * sizeof(char));
     self->length += length;
     return self;
+}
+
+int Str_Compare(Str *self, Str *other)
+{
+    assert(self && "Str_Compare(Str*,Str*): Could not compare 'cause `self` was null");
+    assert(other && "Str_Compare(Str*,Str*): Could not compare 'cause `other` was null");
+    if (self->length < other->length)
+        return -1;
+    if (self->length > other->length)
+        return 1;
+    int diff = 0, len = self->length, offset = 0;
+    while (len >= 8)
+    {
+        diff += *((long long *)(self->start + offset)) - *((long long *)(other->start + offset));
+        offset += 8;
+        len -= 8;
+    }
+    while (len >= 4)
+    {
+        diff += *((int *)(self->start + offset)) - *((int *)(other->start + offset));
+        offset += 4;
+        len -= 4;
+    }
+    while (len >= 1)
+    {
+        diff += *(self->start + offset) - *(other->start + offset);
+        offset += 1;
+        len -= 1;
+    }
+    return diff ? (diff < 0 ? -1 : 1) : 0;
 }

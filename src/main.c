@@ -3,9 +3,10 @@
 
 int main(void)
 {
-    Str *hello = STR("Hello,");
-    Str_Extend(hello, " there!");
-    fprintf(stdout, StrFmt "\n", StrFmtArgs(hello));
-    Str_Free(hello);
+    Str *a = STR("Hello,");
+    Str *b = STR("there!");
+    fprintf(stdout, "%d\n", Str_Compare(a, b));
+    DEL_STR(a);
+    DEL_STR(b);
     return 0;
 }

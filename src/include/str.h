@@ -16,5 +16,6 @@ Str * Str_FromConst(const char *constant);
 void Str_Free(Str *self);
 Str * Str_Concat(Str *self, int count, ...);
 Str * Str_Extend(Str *self, const char *constant);
+int Str_Compare(Str *self, Str *other);
 
 #endif
