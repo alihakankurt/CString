@@ -60,6 +60,32 @@ Str * Str_Extend(Str *self, const char *constant)
     return self;
 }
 
+Str * Str_Shrink(Str *self, int length)
+{
+    assert(self && "Str_Shrink(Str*,int): Could not shrink `self` 'cause it was null");
+    if (length <= 0 || self->length < length)
+        return self;
+    self->length -= length;
+    self->start = realloc(self->start, self->length * sizeof(char));
+    assert(self->start && "Str_Shrink(Str*,int): Could not reallocate enough memory for `self`");
+    return self;
+}
+
+Str * Str_ShrinkStart(Str *self, int length)
+{
+    assert(self && "Str_Shrink(Str*,int): Could not shrink `self` 'cause it was null");
+    if (length <= 0 || self->length < length)
+        return self;
+    self->length -= length;
+    size_t size = self->length * sizeof(char);
+    char *tmp = malloc(size);
+    assert(tmp && "Str_Shrink(Str*,int): Could not reallocate enough memory for `self`");
+    memcpy(tmp, self->start + length, size);
+    free(self->start);
+    self->start = tmp;
+    return self;
+}
+
 int Str_Compare(Str *self, Str *other)
 {
     assert(self && "Str_Compare(Str*,Str*): Could not compare 'cause `self` was null");
