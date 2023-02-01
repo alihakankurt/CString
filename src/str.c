@@ -106,3 +106,20 @@ Str * Str_Clone(Str *self)
     memcpy(clone->start, self->start, size);
     return clone;
 }
+
+Span * Span_FromStr(Str *str, int start, int end)
+{
+    assert(str && "Span_FromStr(Str*,int,int): Could not create span object 'cause provided str was null");
+    Span *span = malloc(sizeof(Span));
+    assert(span && "Span_FromStr(Str*,int,int): Could not allocate enough memory for span");
+    span->start = (0 <= start) ? start : 0;
+    span->end = (end <= str->length) ? end : str->length;
+    span->str = str;
+    return span;
+}
+
+void Span_Free(Span *self)
+{
+    assert(self && "Span_Free(Span*): Could not release memory of `self` 'cause it was null");
+    free(self);
+}

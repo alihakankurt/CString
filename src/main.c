@@ -3,11 +3,10 @@
 
 int main(void)
 {
-    Str *a = STR("Hello, there!");
-    Str *b = Str_Clone(a);
-    fprintf(stdout, StrFmt "\n", StrFmtArgsA(b, 2));
-    fprintf(stdout, StrFmt "\n", StrFmtArgsEx(b, 2, 4));
-    DEL_STR(a);
-    DEL_STR(b);
+    Str *s = STR("Hello, there!");
+    Span *sp = SPAN(s, 7, 12);
+    fprintf(stdout, StrFmt "\n", SpanStrFmtArgs(sp));
+    DEL_STR(s);
+    DEL_SPAN(sp);
     return 0;
 }
